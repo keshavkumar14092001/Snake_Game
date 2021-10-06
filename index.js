@@ -6,6 +6,9 @@ let snake = [
 ];
 let lastRenderedTime = 0;
 let speed = 4;
+const foodSound = new Audio('../music/food.mp3');
+const gameOverSound = new Audio('../music/gameover.mp3');
+const moveSound = new Audio('../music/move.mp3');
 
 // Game Logic:
 window.requestAnimationFrame(main);
@@ -27,6 +30,7 @@ function gameEngine() {
 
     // When Snake gets Collided:
     if (isCollided(snake)) {
+        gameOverSound.play();
         alert("The game is Over please press any key to restart the game");
         position = { x: 0, y: 0 };
         food = { x: 6, y: 6 };
@@ -37,6 +41,7 @@ function gameEngine() {
 
     // Logic when snake eats:
     if (snake[0].y === food.y && snake[0].x === food.x) {
+        foodSound.play();
         snake.unshift({ x: snake[0].x + position.x, y: snake[0].y + position.y });
         let a = 2;
         let b = 15;
@@ -78,6 +83,8 @@ function gameEngine() {
 // Logic When key is pressed:
 function keyPressed(event) {
     let press = event.key;
+    // Start the game:
+    moveSound.play();
     position = { x: 0, y: 1 };
     switch (press) {
         case 'ArrowUp':
